@@ -30,6 +30,9 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/springboot_test?serverTimezone=UTC
     username: root
     password: 123456
+  redis:
+    host: 127.0.0.1
+    port: 6379
 logging:
   level:
     com.jfrd: debug

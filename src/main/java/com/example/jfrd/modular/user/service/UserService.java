@@ -5,8 +5,11 @@ import com.example.jfrd.modular.user.pojo.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+/**
+ * 
+ */
 @Service
-public class UserService {
+public class UserService { //测试该类快捷键Ctrl+Shift+T
 
     @Autowired
     private UserMapper userMapper;
@@ -18,6 +21,7 @@ public class UserService {
 
     //新增用户
     public void addUser(User user) {
+        //
         userMapper.insertSelective(user);
     }
 }
