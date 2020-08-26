@@ -1,0 +1,36 @@
+
+server:
+  port: 8080
+  compression:
+    enabled: true
+    mime-types: application/json
+    min-response-size: 2048
+
+#日志记录级别
+
+
+#热启动,不重启显示更新部分
+#spring:
+#  thymeleaf:
+#    cache: false
+
+#映射文件，必须放在resources下
+mybatis:
+#  实体类别名包路径
+  type-aliases-package: com.example.jfrd.modular.*.pojo
+#  映射文件路径
+#  mapper-locations: classpath:/mapper/*.xml
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/springboot_test?serverTimezone=UTC
+    username: root
+    password: 123456
+logging:
+  level:
+    com.jfrd: debug
+    spring: info
