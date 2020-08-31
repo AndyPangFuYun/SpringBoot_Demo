@@ -16,13 +16,18 @@ server:
 
 #映射文件，必须放在resources下
 mybatis:
+#  映射文件路径
+#  mapper-locations: classpath*:com.example.jfrd.modular.*.dao.mapper/*.xml
+  mapper-locations: classpath*:mapper/*.xml
 #  实体类别名包路径
   type-aliases-package: com.example.jfrd.modular.*.pojo
-#  映射文件路径
-#  mapper-locations: classpath:/mapper/*.xml
+#  global-config:
+#    db-column-underline: true   # 驼峰下划线转换
+#    capital-mode: false   #数据库大写下划线转换
   configuration:
     log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
-
+    # 配置返回数据（column下划线命名&&返回Java实体是驼峰命名），自动匹配无需as（没开启这个，SQL需要写as； selece user_id as userId）
+    map-underscore-to-camel-case: true
 
 spring:
   datasource:
