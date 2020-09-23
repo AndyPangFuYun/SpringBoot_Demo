@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jfrd.modular.personnel.dao.PersonnelMapper">
+    <!--用户信息mapper-->
+    <!--通过查询映射结果-->
+    <resultMap id="BaseResultMap" type="com.example.jfrd.modular.personnel.pojo.Personnel">
+        <!--column:数据库字段名；property:实体类属性-->
+        <result column="id" property="id"/>
+        <result column="label" property="label"/>
+        <result column="personnel_name" property="personnelName"/>
+        <result column="personnel_phone" property="personnelPhone"/>
+        <result column="createtime" property="createTime"/>
+    </resultMap>
+
+    <!--查询所有人员-->
+    <select id="personnelList" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.personnel.pojo.Personnel">
+        SELECT * FROM tb_personnel_info
+    </select>
+
+    <!--根据id查询设备-->
+    <select id="selectPersonnelById" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.personnel.pojo.Personnel">
+        SELECT * FROM tb_personnel_info WHERE id = #{id}
+    </select>
+
+    <!--添加设备-->
+    <!--useGeneratedKeys 设置为“true”表明要mybatis获取有数据库自动生成的主键；keyProperty = "id"指定把获取到的主键值注入到实体类（Device）的id属性-->
+    <insert id="addPersonnel" useGeneratedKeys="true" parameterType="com.example.jfrd.modular.personnel.pojo.Personnel">
+        INSERT INTO tb_personnel_info(label,personnel_name,personnel_phone,createtime) VALUES (#{label},#{personnelName},#{personnelPhone},#{createTime})
+    </insert>
+
+    <!--删除设备-->
+    <delete id="deletePersonnelById" parameterType="com.example.jfrd.modular.personnel.pojo.Personnel">
+        DELETE FROM tb_personnel_info WHERE id = #{id}
+    </delete>
+
+</mapper>

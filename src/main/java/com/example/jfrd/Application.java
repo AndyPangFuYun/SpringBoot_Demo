@@ -9,7 +9,7 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication//禁用系统自动启用自动配置的数据源 - 因为我们要自己定义数据源 所以要禁用
 //扫描mybatis所有的业务mapper接口
-//@MapperScan("com.example.demo.modular.user.mapper")
+//@MapperScan("com.example.jfrd.modular.user.dao")
 @MapperScan("com.example.jfrd.modular.*.dao")
 public class Application {
 

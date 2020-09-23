@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jfrd.modular.location.dao.LocationMapper">
+    <!--用户信息mapper-->
+    <!--通过查询映射结果-->
+    <resultMap id="BaseResultMap" type="com.example.jfrd.modular.location.pojo.Location">
+        <!--column:数据库字段名；property:实体类属性-->
+        <result column="id" property="id"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="label" property="label"/>
+        <result column="device_rssi" property="deviceRssi"/>
+        <result column="createtime" property="createTime"/>
+    </resultMap>
+
+    <!--查询所有设备-->
+    <select id="locationList" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.location.pojo.Location">
+        SELECT * FROM tb_location_info
+    </select>
+
+    <!--根据id查询设备-->
+    <select id="selectLocationById" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.location.pojo.Location">
+        SELECT * FROM tb_location_info WHERE id = #{id}
+    </select>
+
+    <!--添加设备-->
+    <!--useGeneratedKeys 设置为“true”表明要mybatis获取有数据库自动生成的主键；keyProperty = "id"指定把获取到的主键值注入到实体类（Device）的id属性-->
+    <insert id="addLocation" useGeneratedKeys="true" parameterType="com.example.jfrd.modular.location.pojo.Location">
+        INSERT INTO tb_location_info(device_id,label,device_rssi,createtime) VALUES (#{deviceId},#{label},#{deviceRssi},#{createTime})
+    </insert>
+
+    <!--删除设备-->
+    <delete id="deleteLocationById" parameterType="com.example.jfrd.modular.location.pojo.Location">
+        DELETE FROM tb_location_info WHERE id = #{id}
+    </delete>
+
+</mapper>

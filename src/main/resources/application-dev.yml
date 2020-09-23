@@ -17,8 +17,9 @@ server:
 #映射文件，必须放在resources下
 mybatis:
 #  映射文件路径
-#  mapper-locations: classpath*:com.example.jfrd.modular.*.dao.mapper/*.xml
-  mapper-locations: classpath*:mapper/*.xml
+#  dao-locations: classpath*:com.example.jfrd.modular.*.dao/*.xml
+#  mapper-locations: classpath*:dao/*.xml
+  mapper-locations: classpath:mapper/*Mapper.xml
 #  实体类别名包路径
   type-aliases-package: com.example.jfrd.modular.*.pojo
 #  global-config:

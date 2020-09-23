@@ -10,6 +10,8 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import static com.example.jfrd.util.MD5Util.encrypt;
 import static com.example.jfrd.util.MD5Util.getRandomString;
@@ -24,7 +26,8 @@ public class UserServiceImpl implements IUserService { //测试该类快捷键Ct
     private UserMapper userMapper;
 
     //登录
-    public User login(String username, String password) {
+    public Object login(String username, String password) {
+        Map<String,Object> map = new HashMap<>();
         User user = userMapper.login(username, password);
         //用户不存在
         if (user == null) {
@@ -36,7 +39,9 @@ public class UserServiceImpl implements IUserService { //测试该类快捷键Ct
         if (!user.getPassword().equals(passwordMD5)) {
             throw new GuiMedicalException(BizExceptionEnum.USER_NOT_EXISTED.getCode(),BizExceptionEnum.USER_NOT_EXISTED.getMessage());
         }
-        return user;
+        map.put("code","200");
+        map.put("message","登录成功");
+        return map;
     }
 
     //根据id查询用户

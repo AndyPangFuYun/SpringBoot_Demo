@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.jfrd.modular.device.dao.DeviceMapper">
+    <!--用户信息mapper-->
+    <!--通过查询映射结果-->
+    <resultMap id="BaseResultMap" type="com.example.jfrd.modular.device.pojo.Device">
+        <!--column:数据库字段名；property:实体类属性-->
+        <result column="id" property="id"/>
+        <result column="device_id" property="deviceId"/>
+        <result column="device_type" property="deviceType"/>
+        <result column="device_addr" property="deviceAddr"/>
+        <result column="createtime" property="createTime"/>
+    </resultMap>
+
+    <!--查询所有设备-->
+    <select id="deviceList" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.device.pojo.Device">
+        SELECT * FROM tb_device
+    </select>
+
+    <!--根据id查询设备-->
+    <select id="selectDeviceById" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.device.pojo.Device">
+        SELECT * FROM tb_device WHERE device_id = #{id}
+    </select>
+
+    <!--添加设备-->
+    <!--useGeneratedKeys 设置为“true”表明要mybatis获取有数据库自动生成的主键；keyProperty = "id"指定把获取到的主键值注入到实体类（Device）的id属性-->
+    <insert id="addDevice" useGeneratedKeys="true" parameterType="com.example.jfrd.modular.device.pojo.Device">
+        INSERT INTO tb_device(device_id,device_name,device_type,device_addr,createtime) VALUES (#{deviceId},#{deviceName},#{deviceType},#{deviceAddr},#{createTime})
+    </insert>
+
+    <!--删除设备-->
+    <delete id="deleteDeviceById" parameterType="com.example.jfrd.modular.device.pojo.Device">
+        DELETE FROM tb_device WHERE device_id = #{deviceId}
+    </delete>
+
+</mapper>

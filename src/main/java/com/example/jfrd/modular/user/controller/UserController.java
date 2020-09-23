@@ -17,7 +17,8 @@ public class UserController {
     private IUserService userService;
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public User login(@Param(value = "username") String username, @Param(value = "password") String password){
+    public Object login(@Param(value = "username") String username, @Param(value = "password") String password){
+        System.out.println("用户名：" + username + "   密码：" + password );
         return userService.login(username,password);
     }
 
