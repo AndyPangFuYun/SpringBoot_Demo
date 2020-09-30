@@ -5,7 +5,6 @@ server:
     enabled: true
     mime-types: application/json
     min-response-size: 2048
-
 #日志记录级别
 
 
@@ -39,6 +38,12 @@ spring:
   redis:
     host: 127.0.0.1
     port: 6379
+#  mvc:
+#    static-path-pattern: /static/jfrd_admin/**
+  #不用通过方法访问页面
+  resources:
+    static-locations: classpath:/static/jfrd_admin/, classpath:/jfrd_admin/
+
 logging:
   level:
     com.jfrd: debug

@@ -9,10 +9,22 @@
         <result column="device_id" property="deviceId"/>
         <result column="label" property="label"/>
         <result column="device_rssi" property="deviceRssi"/>
+        <result column="device_version" property="deviceVersion"/>
         <result column="createtime" property="createTime"/>
     </resultMap>
 
-    <!--查询所有设备-->
+    <resultMap id="LocationAllVO" type="com.example.jfrd.modular.location.pojo.vo.LocationVO">
+        <!--column:数据库字段名；property:实体类属性-->
+        <result column="id" property="id"/>
+        <result column="label" property="label"/>
+        <result column="personnel_name" property="personnelName"/>
+        <result column="device_name" property="deviceName"/>
+        <result column="device_rssi" property="deviceRssi"/>
+        <result column="device_addr" property="deviceAddr"/>
+        <result column="createtime" property="createTime"/>
+    </resultMap>
+
+    <!--查询所有定位列表-->
     <select id="locationList" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.location.pojo.Location">
         SELECT * FROM tb_location_info
     </select>
@@ -25,12 +37,73 @@
     <!--添加设备-->
     <!--useGeneratedKeys 设置为“true”表明要mybatis获取有数据库自动生成的主键；keyProperty = "id"指定把获取到的主键值注入到实体类（Device）的id属性-->
     <insert id="addLocation" useGeneratedKeys="true" parameterType="com.example.jfrd.modular.location.pojo.Location">
-        INSERT INTO tb_location_info(device_id,label,device_rssi,createtime) VALUES (#{deviceId},#{label},#{deviceRssi},#{createTime})
+        INSERT INTO tb_location_info(device_id,label,device_rssi,device_version,createtime) VALUES (#{deviceId},#{label},#{deviceRssi},#{deviceVersion},#{createTime})
     </insert>
 
     <!--删除设备-->
     <delete id="deleteLocationById" parameterType="com.example.jfrd.modular.location.pojo.Location">
         DELETE FROM tb_location_info WHERE id = #{id}
     </delete>
+
+    <select id="getLocationVoAll" resultMap="LocationAllVO"  resultType="com.example.jfrd.modular.location.pojo.vo.LocationVO">
+        SELECT
+          tl.id,
+          tl.label,
+          tp.personnel_name,
+          td.device_name,
+          tl.device_rssi,
+          td.device_addr,
+          tl.createtime
+        FROM
+          tb_location_info tl
+        LEFT JOIN tb_personnel_info tp ON tl.label = tp.label
+        LEFT JOIN tb_device td ON  td.device_id = tl.device_id
+    </select>
+
+
+    <select id="queryAllCount" resultType="java.lang.Integer" parameterType="com.example.jfrd.modular.location.pojo.vo.LocationVO">
+        SELECT count(*)
+        FROM
+          tb_location_info tl
+        LEFT JOIN tb_personnel_info tp ON tl.label = tp.label
+        LEFT JOIN tb_device td ON  td.device_id = tl.device_id
+        <where>
+            <if test="start != null and start != ''">
+                tl.createtime <![CDATA[>=]]> #{start}
+            </if>
+            <if test="end != null and end != ''">
+                AND  tl.createtime <![CDATA[<=]]> #{end}
+            </if>
+            <if test="personnelName != null and personnelName != ''">
+                AND tp.personnel_name LIKE CONCAT(CONCAT('%',#{personnelName}),'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getLocationVoLike" resultMap="LocationAllVO" resultType="com.example.jfrd.modular.location.pojo.vo.LocationVO">
+        SELECT
+          tl.id,
+          tl.label,
+          tp.personnel_name,
+          td.device_name,
+          tl.device_rssi,
+          td.device_addr,
+          tl.createtime
+        FROM
+          tb_location_info tl
+        LEFT JOIN tb_personnel_info tp ON tl.label = tp.label
+        LEFT JOIN tb_device td ON  td.device_id = tl.device_id
+        <where>
+            <if test="start != null and start != ''">
+                tl.createtime <![CDATA[>=]]> #{start}
+            </if>
+            <if test="end != null and end != ''">
+                AND  tl.createtime <![CDATA[<=]]> #{end}
+            </if>
+            <if test="personnelName != null and personnelName != ''">
+                AND tp.personnel_name LIKE CONCAT(CONCAT('%',#{personnelName}),'%')
+            </if>
+        </where>
+    </select>
 
 </mapper>

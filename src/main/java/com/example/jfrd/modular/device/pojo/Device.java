@@ -34,5 +34,5 @@ public class Device {
 
     //创建时间
     @Column(name = "createtime")
-    private Date createTime;
+    private String createTime;
 }

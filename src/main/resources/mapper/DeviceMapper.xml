@@ -12,14 +12,43 @@
         <result column="createtime" property="createTime"/>
     </resultMap>
 
+    <!--查询数据量-->
+    <select id="queryAllCount" resultType="java.lang.Integer" parameterType="com.example.jfrd.modular.device.pojo.Device">
+        SELECT count(*)
+        FROM
+        tb_device
+        <where>
+            <if test="start != null and start != ''">
+                createtime <![CDATA[>=]]> #{start}
+            </if>
+            <if test="end != null and end != ''">
+                AND  createtime <![CDATA[<=]]> #{end}
+            </if>
+            <if test="deviceName != null and deviceName != ''">
+                AND device_name LIKE CONCAT(CONCAT('%',#{deviceName}),'%')
+            </if>
+        </where>
+    </select>
+
     <!--查询所有设备-->
     <select id="deviceList" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.device.pojo.Device">
         SELECT * FROM tb_device
+        <where>
+            <if test="start != null and start != ''">
+                createtime <![CDATA[>=]]> #{start}
+            </if>
+            <if test="end != null and end != ''">
+                AND  createtime <![CDATA[<=]]> #{end}
+            </if>
+            <if test="deviceName != null and deviceName != ''">
+                AND device_name LIKE CONCAT(CONCAT('%',#{deviceName}),'%')
+            </if>
+        </where>
     </select>
 
     <!--根据id查询设备-->
     <select id="selectDeviceById" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.device.pojo.Device">
-        SELECT * FROM tb_device WHERE device_id = #{id}
+        SELECT * FROM tb_device WHERE id = #{id}
     </select>
 
     <!--添加设备-->
@@ -30,7 +59,10 @@
 
     <!--删除设备-->
     <delete id="deleteDeviceById" parameterType="com.example.jfrd.modular.device.pojo.Device">
-        DELETE FROM tb_device WHERE device_id = #{deviceId}
+        DELETE FROM tb_device WHERE id = #{id}
     </delete>
 
+    <update id="updateDevice" parameterType="com.example.jfrd.modular.device.pojo.Device">
+        UPDATE tb_device SET device_id = #{deviceId},device_name = #{deviceName},device_type = #{deviceType},device_addr = #{deviceAddr},createtime = #{createTime} WHERE id = #{id}
+    </update>
 </mapper>

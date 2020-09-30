@@ -6,7 +6,6 @@ import tk.mybatis.mapper.annotation.KeySql;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.util.Date;
 
 @Data
 @Table(name = "tb_location_info")
@@ -29,7 +28,11 @@ public class Location {
     @Column(name = "device_rssi")
     private String deviceRssi;
 
+    //设备固件版本
+    @Column(name = "device_version")
+    private String deviceVersion;
+
     //创建时间
     @Column(name = "createtime")
-    private Date createTime;
+    private String createTime;
 }

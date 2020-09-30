@@ -1,6 +1,8 @@
 package com.example.jfrd.modular.location.service;
 
 import com.example.jfrd.modular.location.pojo.Location;
+import com.example.jfrd.modular.location.pojo.vo.LocationVO;
+import com.example.jfrd.util.JsonResult;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,6 +15,7 @@ public interface ILocationService {
      * @return
      */
     List<Location> locationList();
+    List<LocationVO> getLocationVoAll();
 
     /**
      * 根据id查询单条记录
@@ -32,4 +35,22 @@ public interface ILocationService {
      * @param id
      */
     void deleteLocationById(String id);
+
+    /**
+     * 查询数据量
+     * @param start 开始时间
+     * @param end 截止时间
+     * @param personnelName 姓名
+     * @return List<LocationVO>
+     */
+    int queryAllCount(String start, String end, String personnelName);
+
+    /**
+     * 模糊查询
+     * @param start 开始时间
+     * @param end   截止时间
+     * @param personnelName 姓名
+     * @return List<LocationVO>
+     */
+    List<LocationVO> getLocationVoLike(String start, String end, String personnelName);
 }

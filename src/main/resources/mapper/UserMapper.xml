@@ -30,4 +30,8 @@
         SELECT * FROM tb_user WHERE tb_user.username = #{username}
     </select>
 
+    <!--用户信息修改-->
+    <update id="updateUser" parameterType="com.example.jfrd.modular.user.pojo.User">
+        UPDATE tb_user SET username = #{username},phone = #{phone},salt = #{salt},password = #{password},email =#{email},createtime = #{createTime} WHERE id = #{id}
+    </update>
 </mapper>

@@ -39,7 +39,7 @@ public class User {
 
     //出生日期
     @Column(name = "birthday")
-    private Date birthday;
+    private String birthday;
 
     //电子邮件
     @Column(name = "email")
@@ -63,5 +63,5 @@ public class User {
 
     //创建时间
     @Column(name = "createtime")
-    private Date createTime;
+    private String createTime;
 }

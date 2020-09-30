@@ -11,7 +11,7 @@ public interface UserMapper extends BaseMapper<User> {
      * @param id 用户id
      * @return 查询到的用户
      */
-    User userById(int id);
+    User userById(String id);
 
     /**
      * 新增用户
@@ -26,4 +26,11 @@ public interface UserMapper extends BaseMapper<User> {
      * @return 用户信息
      */
     User login(@Param("username") String username,@Param("password") String password);
+
+    /**
+     * 修改
+     * @param user 用户信息
+     * @return 1 成功，0失败
+     */
+    Integer updateUser(User user);
 }

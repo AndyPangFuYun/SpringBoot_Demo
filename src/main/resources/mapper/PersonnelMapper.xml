@@ -12,9 +12,38 @@
         <result column="createtime" property="createTime"/>
     </resultMap>
 
+    <!--查询数据量-->
+    <select id="queryAllCount" resultType="java.lang.Integer" parameterType="com.example.jfrd.modular.personnel.pojo.Personnel">
+        SELECT count(*)
+        FROM
+        tb_personnel_info
+        <where>
+            <if test="start != null and start != ''">
+                createtime <![CDATA[>=]]> #{start}
+            </if>
+            <if test="end != null and end != ''">
+                AND  createtime <![CDATA[<=]]> #{end}
+            </if>
+            <if test="personnelName != null and personnelName != ''">
+                AND personnel_name LIKE CONCAT(CONCAT('%',#{personnelName}),'%')
+            </if>
+        </where>
+    </select>
+
     <!--查询所有人员-->
     <select id="personnelList" resultMap="BaseResultMap" resultType="com.example.jfrd.modular.personnel.pojo.Personnel">
         SELECT * FROM tb_personnel_info
+        <where>
+            <if test="start != null and start != ''">
+                createtime <![CDATA[>=]]> #{start}
+            </if>
+            <if test="end != null and end != ''">
+                AND  createtime <![CDATA[<=]]> #{end}
+            </if>
+            <if test="personnelName != null and personnelName != ''">
+                AND personnel_name LIKE CONCAT(CONCAT('%',#{personnelName}),'%')
+            </if>
+        </where>
     </select>
 
     <!--根据id查询设备-->
@@ -32,5 +61,9 @@
     <delete id="deletePersonnelById" parameterType="com.example.jfrd.modular.personnel.pojo.Personnel">
         DELETE FROM tb_personnel_info WHERE id = #{id}
     </delete>
+
+    <update id="updatePersonnel" parameterType="com.example.jfrd.modular.personnel.pojo.Personnel">
+        UPDATE tb_personnel_info SET label = #{label},personnel_name = #{personnelName},personnel_phone = #{personnelPhone},createtime = #{createTime} WHERE id = #{id}
+    </update>
 
 </mapper>
