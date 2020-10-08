@@ -3,10 +3,16 @@ package com.example.jfrd.modular.user.controller;
 import com.example.jfrd.modular.user.pojo.User;
 import com.example.jfrd.modular.user.service.IUserService;
 import com.example.jfrd.util.JsonResult;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+@Slf4j
 @RestController
 @RequestMapping(value = "/user")
 public class UserController {
@@ -16,8 +22,10 @@ public class UserController {
 
     @CrossOrigin
     @RequestMapping(value = "/login",method = RequestMethod.POST)
-    public JsonResult login(@Param(value = "username") String username, @Param(value = "password") String password){
+    public JsonResult login(@Param(value = "username") String username, @Param(value = "password") String password,HttpServletRequest request,HttpServletResponse response){
         JsonResult jsonResult =  userService.login(username,password);
+        HttpSession session = request.getSession();
+        session.setAttribute("user",jsonResult.getMap());
         return jsonResult;
     }
 
@@ -42,6 +50,19 @@ public class UserController {
     @RequestMapping(value = "/update" , method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     public JsonResult updateUser(@RequestBody  User user){
         JsonResult jsonResult = userService.updateUser(user);
+        return jsonResult;
+    }
+
+    /**
+     * 注销登录
+     * @return jsonResult
+     */
+    @RequestMapping(value = "/exit" , method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    public JsonResult exit(HttpServletRequest request,HttpServletResponse response){
+        JsonResult jsonResult = new JsonResult();
+        request.getSession().removeAttribute("user");
+        jsonResult.setCode("200");
+        jsonResult.setMessage("注销成功");
         return jsonResult;
     }
 

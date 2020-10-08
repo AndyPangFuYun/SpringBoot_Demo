@@ -1,6 +1,7 @@
 //全局变量定义（必须引用此文件）---------------------------------------------
 // var serverURL="http://119.23.45.159:8080";
 var serverURL="http://localhost:8080";
+// var serverURL="http://127.0.0.1:8080";
 
 try{
     if (/Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent)) {

@@ -20,11 +20,6 @@ public class LocationController {
     @Autowired
     private ILocationService ILocationService;
 
-//    @RequestMapping(value = "/list", method = RequestMethod.GET)
-//    public Object list() {
-//        return ILocationService.locationList();
-//    }
-
     @CrossOrigin
     @RequestMapping(value = "/locationList", method = RequestMethod.GET)
     public Object locationList() {
@@ -59,9 +54,8 @@ public class LocationController {
 //    }
 
 
-    //测试用
     @ResponseBody
-    @RequestMapping(value = "/list",method = RequestMethod.GET, produces = "application/json;charset=UTF-8")
+    @RequestMapping(value = "/list",method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public Object getLocationVoLike(String start,String end,String personnelName){
         List<LocationVO> data = ILocationService.getLocationVoLike(start,end,personnelName);
         int count=  ILocationService.queryAllCount(start,end,personnelName);

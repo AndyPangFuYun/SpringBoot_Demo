@@ -47,7 +47,7 @@
                                    class="layui-input">
                         </div>
                         <div class="layui-inline layui-show-xs-block">
-                            <button type="button" class="layui-btn layui-btn-sm layui-icon layui-icon-search" data-type="reload">搜索111</button>
+                            <button type="button" class="layui-btn layui-btn-sm layui-icon layui-icon-search" data-type="reload">搜索</button>
                             <!--<button type="reset" class="layui-btn layui-btn-warm layui-btn-sm layui-icon layui-icon-refresh">重置</button>-->
                         </div>
                     </form>
@@ -119,6 +119,9 @@
 </body>
 
 <script>
+    var currentPageNo = 1;
+    var pageSize = 10;
+
     layui.use(['laydate', 'form', 'laypage', 'table'], function () {
         var table = layui.table;
         var laydate = layui.laydate;
@@ -129,8 +132,10 @@
         var tableIns = table.render({
             elem: '#personnel_table' //渲染的目标对象
             , url: serverURL + '/personnel/list' //数据接口
+            , method:'post'
+            , async: true
             , cellMinWidth: 70 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
-            , text: {
+            , text:{
                 none: '暂无相关数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
             }
             , cols: [[ //列表数据
@@ -143,7 +148,26 @@
             ]]
             , id: 'testReload'
             , page: true //是否启动分页
+            , request: {//请求携带的参数
+                pageName: 'currentPageNo' //页码的参数名称，默认：page
+                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                var result;
+                if (this.page.curr) {
+                    result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+                } else {
+                    result = res.data.slice(0, this.limit);
+                }
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": result //解析数据列表
+                };
+            }
         });
+
         var $ = layui.$, active = {
             reload: function(){
                 var start = $('#start');

@@ -44,6 +44,7 @@ spring:
   resources:
     static-locations: classpath:/static/jfrd_admin/, classpath:/jfrd_admin/
 
+#日子记录级别
 logging:
   level:
     com.jfrd: debug

@@ -38,7 +38,7 @@
                 <!--<dd>-->
                     <!--<a onclick="xadmin.open('切换帐号','http://www.baidu.com')">切换帐号</a></dd>-->
                 <dd>
-                    <a href="./login.html">退出</a></dd>
+                    <a href="#" onclick="exit()">退出</a></dd>
             </dl>
         </li>
         <!--<li class="layui-nav-item to-index">-->
@@ -350,6 +350,24 @@
         });
         gonggao.addEventListener('mouseout', function () {
             gonggaos.style.display = 'none';
+        });
+    }
+
+    function exit() {
+        $.ajax({
+            url: serverURL+'/user/exit',
+            type: "GET",
+            dataType: 'JSON',
+            success: function(res) {
+                if (res.code == "200") {
+                    location.href = 'login.html'
+                    layer.msg(res.message,{icon:1});
+                }
+            },
+            error: function() {
+                layer.msg("服务器繁忙，请稍后再试");
+                return false;
+            },
         });
     }
 </script>

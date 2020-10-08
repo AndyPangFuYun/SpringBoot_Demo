@@ -61,6 +61,9 @@
 </body>
 
 <script>
+    var currentPageNo = 1;
+    var pageSize = 10;
+
     layui.use(['laydate', 'form', 'laypage', 'table'], function () {
         var table = layui.table;
         var laydate = layui.laydate;
@@ -69,9 +72,8 @@
         table.render({
             elem: '#personnel_table'  //渲染的目标对象
             , url: serverURL + '/location/list' //数据接口
-            , async: false
-            , done:function(res, curr, count){ //数据的回调用，可不写
-                 }
+            , method:'post'
+            , async: true
             ,text:{
                 none: '暂无相关数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
             }
@@ -86,12 +88,22 @@
             ]]
             , id: 'testReload'
             , page: true //是否启动分页
-            , parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+            , request: {//请求携带的参数
+                pageName: 'currentPageNo' //页码的参数名称，默认：page
+                , limitName: 'pageSize' //每页数据量的参数名，默认：limit
+            }
+            , parseData: function (res) { //将原始数据解析成 table 组件所规定的数据
+                var result;
+                if (this.page.curr) {
+                    result = res.data.slice(this.limit * (this.page.curr - 1), this.limit * this.page.curr);
+                } else {
+                    result = res.data.slice(0, this.limit);
+                }
                 return {
                     "code": res.code, //解析接口状态
                     "msg": res.msg, //解析提示文本
                     "count": res.count, //解析数据长度
-                    "data": res.data //解析数据列表
+                    "data": result //解析数据列表
                 };
             }
         });

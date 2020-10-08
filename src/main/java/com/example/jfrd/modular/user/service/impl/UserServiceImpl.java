@@ -7,6 +7,9 @@ import com.example.jfrd.util.JsonResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -29,7 +32,6 @@ public class UserServiceImpl implements IUserService { //测试该类快捷键Ct
     public JsonResult login(String username, String password) {
         JsonResult jsonResult = new JsonResult();
         Map<Object,Object> map = new HashMap<>();
-
         if (username == null || username.trim().length() == 0){
             jsonResult.setCode("500");
             jsonResult.setMessage("请输入用户名！");
@@ -49,6 +51,8 @@ public class UserServiceImpl implements IUserService { //测试该类快捷键Ct
             String passwordMD5 = encrypt(strPassword);
 
             if (user.getPassword().equals(passwordMD5)) {
+                map.put("user",user);
+                jsonResult.setMap(map);
                 jsonResult.setCode("200");
                 jsonResult.setMessage("登录成功");
             }else {

@@ -1,6 +1,5 @@
 package com.example.jfrd.modular.personnel.controller;
 
-import com.example.jfrd.modular.device.pojo.Device;
 import com.example.jfrd.modular.personnel.pojo.Personnel;
 import com.example.jfrd.modular.personnel.service.IPersonnelService;
 import com.example.jfrd.util.JsonResult;
@@ -25,7 +24,7 @@ public class PersonnelController {
      * @return 成功 200 ，失败 500
      */
     @CrossOrigin
-    @RequestMapping(value = "/list",method = RequestMethod.GET)
+    @RequestMapping(value = "/list", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public Object personnelList(String start,String end,String personnelName){
         List<Personnel> list = personnelService.personnelList(start,end,personnelName);
         int count=  personnelService.queryAllCount(start,end,personnelName);
@@ -77,7 +76,6 @@ public class PersonnelController {
      */
     @RequestMapping(value = "/update", method = RequestMethod.POST, produces = "application/json;charset=UTF-8")
     public JsonResult updateDevice(@RequestBody Personnel personnel){
-        System.out.println("===================" + personnel.getId());
         JsonResult jsonResult = personnelService.updatePersonnel(personnel);
         return jsonResult;
     }
