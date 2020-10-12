@@ -1,7 +1,9 @@
 package com.example.jfrd.interceptor;
 
+import com.example.jfrd.modular.user.pojo.User;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.lang.Nullable;
+import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -13,9 +15,11 @@ import javax.servlet.http.HttpServletResponse;
  */
 @Slf4j
 public class LoginHandlerInterceptor implements HandlerInterceptor {
+
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        Object user = request.getSession().getAttribute("user");
+        System.out.println("==========================================");
+        User user = (User) request.getSession().getAttribute("user");
         if (user == null){
             response.sendRedirect("/login.html");       //检测到用户未登录时，跳转到登录界面
             System.out.println("==================未登录，接口拦截，跳转登录页=========================");

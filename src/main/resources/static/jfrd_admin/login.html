@@ -1,83 +1,91 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>登录</title>
-		<link rel="stylesheet" href="css/login.css">
-		<link rel="shortcut icon" href="images/bitbug_favicon.ico" type="image/x-icon">
-		<link rel="icon" sizes="any" mask="" href="https://www.baidu.com/img/baidu.svg">
-		<script src="js/jquery-1.7.2.js"></script>
-		<script src="js/ban.js"></script>
-		<script src="js/echarts.min.js"></script>
-		<script src="./lib/layui/layui.all.js" charset="utf-8"></script>
-		<script type="text/javascript" src="./js/index.js"></script>
-	</head>
-	<body>
-		<canvas class="cavs" width="1575" height="1337"></canvas>
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="shortcut icon" href="images/bitbug_favicon.ico" type="image/x-icon">
+    <link rel="icon" sizes="any" mask="" href="https://www.baidu.com/img/baidu.svg">
+    <script src="js/jquery-1.7.2.js"></script>
+    <script src="js/ban.js"></script>
+    <script src="js/echarts.min.js"></script>
+    <script src="./lib/layui/layui.all.js" charset="utf-8"></script>
+    <script type="text/javascript" src="./js/index.js"></script>
+</head>
+<body>
+<canvas class="cavs" width="1575" height="1337"></canvas>
 
-		<div class="loginmain">
-			<div class="login-title">
-				<!--<span>深圳市骏发瑞达科技有限公司</span>-->
-				<span>RFID后台管理系统</span>
-			</div>
-			<form class="layui-form">
-				<div class="login-con">
-					<div class="login-user">
-						<div class="icon">
-							<img src="images/cd-icon-username.png" alt="">
-						</div>
-						<input type="text" name="username" placeholder="用户名" id="username" lay-verify="required" class="layui-input" autocomplete="off">
-					</div>
-					<div class="login-pwd">
-						<div class="icon">
-							<img src="images/cd-icon-password.png" alt="">
-						</div>
-						<input type="password" name="password" placeholder="密码" id="password" lay-verify="required" class="layui-input">
-					</div>
-					<!-- <div class="login-yan">
-						<div class="icon">
-							<img src="images/yan.png" alt="">
-						</div>
-						<input type="text" name="pwd" placeholder="验证码" autocomplete="off"> 
-					</div> -->
-					<div class="login-btn">
-						<input type="submit" lay-submit lay-filter="login" value="登录" id="enter">
-					</div>
-				</div>
-			</form>
-		</div>
+<div class="loginmain">
+    <div class="login-title">
+        <!--<span>深圳市骏发瑞达科技有限公司</span>-->
+        <span>RFID后台管理系统</span>
+    </div>
+    <form class="layui-form">
+        <div class="login-con">
+            <div class="login-user">
+                <div class="icon">
+                    <img src="images/cd-icon-username.png" alt="">
+                </div>
+                <input type="text" name="username" placeholder="用户名" id="username" lay-verify="required"
+                       class="layui-input" autocomplete="off" value="username">
+            </div>
+            <div class="login-pwd">
+                <div class="icon">
+                    <img src="images/cd-icon-password.png" alt="">
+                </div>
+                <input type="password" name="password" placeholder="密码" id="password" lay-verify="required"
+                       class="layui-input" value="123456">
+            </div>
+            <!-- <div class="login-yan">
+                <div class="icon">
+                    <img src="images/yan.png" alt="">
+                </div>
+                <input type="text" name="pwd" placeholder="验证码" autocomplete="off">
+            </div> -->
+            <div class="login-btn">
+                <input type="submit" lay-submit lay-filter="login" value="登录" id="enter">
+            </div>
+        </div>
+    </form>
+</div>
 
-		<script>
-			layui.use(['layer', 'form', 'laydate'], function() {
-				var layer = layui.layer,
-					laydate = layui.laydate,
-					form = layui.form;
+<script>
+    if (top != window) {
+        top.location.href = window.location.href;
+    }
 
-				form.on('submit(login)', function(data) {
-					$.ajax({
-						url: serverURL+'/user/login',
-						type: "POST",
-						data: data.field,
-						dataType: 'JSON',
-						success: function(res) {
-							if (res.code == "400") {
-								layer.msg(res.message,{icon:2});
-							}
-							if (res.code == "500") {
-								layer.msg(res.message,{icon:2});
-							}
-							if (res.code == "200") {
-								location.href = 'index.html'
-							}
-						},
-						error: function() {
-							layer.msg("服务器繁忙，请稍后再试");
-							return false;
-						},
-					});
-					return false;
-				});
-			});
-		</script>
-	</body>
+    layui.use(['layer', 'form', 'laydate'], function () {
+        var layer = layui.layer,
+            form = layui.form;
+
+        form.on('submit(login)', function (data) {
+            var loadix = layer.load(1, {shade: [0.1,'#fff']});
+            $.ajax({
+                url: serverURL + '/user/login',
+                type: "POST",
+                data: data.field,
+                dataType: 'JSON',
+                success: function (res) {
+                    layer.close(loadix);
+                    if (res.code == "400") {
+                        layer.msg(res.message, {icon: 2});
+                    }
+                    if (res.code == "500") {
+                        layer.msg(res.message, {icon: 2});
+                    }
+                    if (res.code == "200") {
+                        location.href = 'index.html'
+                    }
+                },
+                error: function () {
+                    layer.close(loadix);
+                    layer.msg("服务器繁忙，请稍后再试",{icon: 2});
+                    return false;
+                },
+            });
+            return false;
+        });
+    });
+</script>
+</body>
 </html>

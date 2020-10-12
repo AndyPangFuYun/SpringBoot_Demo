@@ -32,6 +32,6 @@
 
     <!--用户信息修改-->
     <update id="updateUser" parameterType="com.example.jfrd.modular.user.pojo.User">
-        UPDATE tb_user SET username = #{username},phone = #{phone},salt = #{salt},password = #{password},email =#{email},createtime = #{createTime} WHERE id = #{id}
+        UPDATE tb_user SET username = #{username},name = #{name},phone = #{phone},salt = #{salt},password = #{password},email =#{email},createtime = #{createTime} WHERE id = #{id}
     </update>
 </mapper>

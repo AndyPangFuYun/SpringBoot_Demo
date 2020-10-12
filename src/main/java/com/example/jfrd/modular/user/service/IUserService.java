@@ -4,6 +4,9 @@ import com.example.jfrd.modular.user.pojo.User;
 import com.example.jfrd.util.JsonResult;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 @Service
 public interface IUserService {
 
@@ -13,7 +16,7 @@ public interface IUserService {
      * @param id 用户id
      * @return 查询到的用户
      */
-    User userById(String id);
+    JsonResult userById(String id);
 
     /**
      * 添加用户
@@ -29,7 +32,7 @@ public interface IUserService {
      * @param password 密码
      * @return 用户信息
      */
-    JsonResult login(String username, String password);
+    JsonResult login(String username, String password, HttpServletRequest request, HttpServletResponse response);
 
     /**
      * 修改

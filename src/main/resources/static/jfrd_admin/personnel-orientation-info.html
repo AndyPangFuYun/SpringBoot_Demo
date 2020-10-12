@@ -5,8 +5,7 @@
     <title>定位信息</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <meta name="viewport"
-          content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>
+    <!--<meta name="viewport" content="width=device-width,user-scalable=yes, minimum-scale=0.4, initial-scale=0.8,target-densitydpi=low-dpi"/>-->
     <link rel="stylesheet" href="./css/font.css">
     <link rel="stylesheet" href="./css/index.css">
     <script src="./lib/layui/layui.js" charset="utf-8"></script>
@@ -78,7 +77,8 @@
                 none: '暂无相关数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
             }
             , cols: [[ //列表数据
-                {field: 'id', title: 'ID', sort: true, align: 'center'}
+                  {type:'numbers',width: 80,title: '序号', align: 'center'}
+//                , {field: 'id', title: 'ID', sort: true, align: 'center'}
                 , {field: 'label', title: 'EPC', align: 'center'}
                 , {field: 'personnelName', title: '姓名', sort: false, align: 'center'}
                 , {field: 'deviceName', title: '设备名称', align: 'center'}

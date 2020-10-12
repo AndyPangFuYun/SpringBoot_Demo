@@ -164,10 +164,10 @@ try{
                 return false;
               }else if(e.keyCode == 123){
                 //F12
-                // setTimeout(function(){
-                //   alert('亲，你想干嘛,不要做坏事哦');
-                // },1);
-                // return false;
+                setTimeout(function(){
+                  alert('亲，你想干嘛,不要做坏事哦');
+                },1);
+                return false;
                 //Ctrl+Shift+I
               }else if((e.ctrlKey) && (e.shiftKey) && (e.keyCode == 73)){
                 setTimeout(function(){

@@ -10,7 +10,7 @@ public class MyMvcConfig implements WebMvcConfigurer {
 
     //所要拦截的请求路径
     String[] addPathPatterns = {
-            "/*/**"
+            "/**"
     };
 
     //不需要拦截的请求路径

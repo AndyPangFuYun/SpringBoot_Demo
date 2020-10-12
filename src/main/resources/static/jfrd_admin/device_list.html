@@ -138,8 +138,7 @@
 			var table = layui.table;
 			var laydate = layui.laydate;
 			var form = layui.form;
-			var laypage = layui.laypage,
-				layer = layui.layer;
+			var layer = layui.layer;
 
             var tableIns = table.render({
                 elem: '#device_table' //渲染的目标对象
@@ -152,7 +151,8 @@
                 }
                 , cols: [[ //列表数据
 					 {type: 'checkbox',fixed: 'left',width: 80}
-                    ,{field: 'id', width: 80, title: 'ID', sort: true, align: 'center'}
+                    ,{type:'numbers',width: 80,title: '序号', align: 'center'}
+//                    ,{field: 'id', width: 80, title: 'ID', sort: true, align: 'center'}
                     ,{field: 'deviceId', title: '设备ID', align: 'center'}
                     ,{field: 'deviceName', title: '设备名称', sort: false, align: 'center'}
                     ,{field: 'deviceType', title: '设备类型', align: 'center'}

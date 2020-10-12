@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @Slf4j
 @RestController
@@ -21,17 +20,17 @@ public class UserController {
     private IUserService userService;
 
     @CrossOrigin
-    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    @RequestMapping(value = "/login",method = RequestMethod.POST,produces = "application/json;charset=UTF-8")
     public JsonResult login(@Param(value = "username") String username, @Param(value = "password") String password,HttpServletRequest request,HttpServletResponse response){
-        JsonResult jsonResult =  userService.login(username,password);
-        HttpSession session = request.getSession();
-        session.setAttribute("user",jsonResult.getMap());
+        JsonResult jsonResult =  userService.login(username,password,request,response);
         return jsonResult;
     }
 
-    @RequestMapping(value = "/userInfo",method = RequestMethod.GET)
-    public User queryById(@PathVariable String id){
-        return userService.userById(id);
+    @RequestMapping(value = "/userInfo",method = RequestMethod.GET,produces = "application/json;charset=UTF-8")
+    public JsonResult queryById(HttpServletResponse response,HttpServletRequest request){
+        User user = (User) request.getSession().getAttribute("user");
+        JsonResult jsonResult = userService.userById(user.getId());
+        return jsonResult;
     }
 
     @RequestMapping(value = "/user/add",method = RequestMethod.GET)
@@ -62,7 +61,7 @@ public class UserController {
         JsonResult jsonResult = new JsonResult();
         request.getSession().removeAttribute("user");
         jsonResult.setCode("200");
-        jsonResult.setMessage("注销成功");
+        jsonResult.setMessage("服务器：注销成功");
         return jsonResult;
     }
 
